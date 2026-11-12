@@ -11,6 +11,7 @@ $username = $_SESSION['username'] ?? '';
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
         * {
@@ -23,7 +24,7 @@ $username = $_SESSION['username'] ?? '';
         body {
             background-color: #f7f7f8;
             color: #111827;
-            padding: 40px 20px;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,12 +33,12 @@ $username = $_SESSION['username'] ?? '';
 
         .container {
             background-color: #ffffff;
-            padding: 40px;
+            padding: 32px;
             width: 100%;
             max-width: 480px;
             border: 1px solid #e4e4e7;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             text-align: center;
         }
 
@@ -66,7 +67,7 @@ $username = $_SESSION['username'] ?? '';
             width: 100%;
             background-color: #111827;
             color: white;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
@@ -83,7 +84,7 @@ $username = $_SESSION['username'] ?? '';
             width: 100%;
             background-color: #ffffff;
             color: #dc2626;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
@@ -97,16 +98,20 @@ $username = $_SESSION['username'] ?? '';
         }
 
         .username {
-            color: blue;
+            color: #2563eb; /* Mengubah warna biru agar terlihat lebih modern */
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-<div>
+<div class="container">
     <h2>Selamat datang, <span class="username"><?= htmlspecialchars($username) ?></span>!</h2>
-    <p>Anda berhasil login. Ini adalah halaman yang dilindungi (protected page).</p>
-    <p><a href="catatan.php">Kelola Catatan (CRUD)</a></p>
-    <p><a href="keluar.php">Logout</a></p>
+    <p>Anda berhasil login. Ini adalah halaman utama dashboard Anda.</p>
+    
+    <div class="menu-grid">
+        <a href="catatan.php" class="btn-primary">Kelola Catatan (CRUD)</a>
+        <a href="keluar.php" class="btn-logout">Logout</a>
+    </div>
 </div>
 </body>
 </html>

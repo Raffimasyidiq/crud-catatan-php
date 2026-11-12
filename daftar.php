@@ -8,12 +8,10 @@ $errors = [];
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // 1. Ambil input dari form.
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $password2 = $_POST['password2'] ?? '';
 
-    // 2. Validasi sederhana
     if ($username === '' || $password === '') {
         $errors[] = 'Username dan password wajib diisi.';
     } elseif (strlen($username) < 3) {
@@ -23,15 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($password !== $password2) {
         $errors[] = 'Konfirmasi password tidak cocok.';
     } else {
-        // 3. Cek apakah username sudah dipakai.
-
         $stmt = $pdo->prepare('SELECT id FROM users WHERE username = ?');
         $stmt->execute([$username]);
         if ($stmt->fetch()) {
-            // Perbaikan: Ubah '$error[]' menjadi '$errors[]'
             $errors[] = 'Username sudah digunakan.';
         } else {
-            // 4. Simpan user baru dengan password yang di hash.
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)');
             $stmt->execute([$username, $hash]);
@@ -44,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <style>
         * {
@@ -58,17 +53,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
             background-color: #ffffff;
-            padding: 40px;
+            padding: 32px;
             width: 100%;
             max-width: 420px;
             border: 1px solid #e4e4e7;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
 
         h2 {
@@ -110,26 +106,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 14px;
             font-size: 14px;
             border: 1px solid #d1d5db;
             border-radius: 6px;
             margin-bottom: 16px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         input[type="text"]:focus,
         input[type="password"]:focus {
             border-color: #111827;
-            box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.1);
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
         }
 
         button[type="submit"] {
             width: 100%;
             background-color: #111827;
             color: white;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
             font-weight: 600;
             border: none;
@@ -162,27 +158,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <div>
+    <div class="container">
         <h2>Daftar Akun</h2>
 
         <?php foreach ($errors as $e): ?>
-            <p style="color: red;"><?= htmlspecialchars($e) ?></p>
+            <div class="error-msg"><?= htmlspecialchars($e) ?></div>
         <?php endforeach; ?>
 
         <?php if ($success): ?>
-            <p style="color: green;"><?= htmlspecialchars($success) ?></p>
+            <div class="success-msg"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
 
         <form method="post" action="">
-            <label for="">Username</label>
-            <input type="text" name="username" required>
-            <br>
-            <label for="">Password</label>
-            <input type="password" name="password" required>
-            <br>
-            <label for="">Konfirmasi Password</label>
-            <input type="password" name="password2" required>
-            <br>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <label for="password2">Konfirmasi Password</label>
+            <input type="password" id="password2" name="password2" required>
+            
             <button type="submit">Daftar</button>
         </form>
 

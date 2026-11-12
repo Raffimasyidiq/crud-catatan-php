@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
@@ -54,21 +55,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh; /* Aman untuk perangkat mobile / layar pendek */
+            padding: 20px;     /* Memberikan jarak aman di pinggir layar HP */
         }
 
         .container {
             background-color: white;
-            padding: 40px;
+            padding: 32px;
             width: 100%;
             max-width: 420px;
-            border: 1px solid black;
-            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
 
         h2 {
             font-size: 24px;
-            font-weight: 700p;
+            font-weight: 700; /* Diperbaiki dari '700p' */
             color: #111827;
             text-align: center;
             margin-bottom: 24px;
@@ -85,26 +88,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 14px;
             font-size: 14px;
             border: 1px solid #d1d5db;
             border-radius: 6px;
             margin-bottom: 16px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         input[type="text"]:focus,
         input[type="password"]:focus {
             border-color: #111827;
-            box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.1);
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
         }
 
         button[type="submit"] {
             width: 100%;
-            background-color: #111827; /* Warna hitam pekat modern */
+            background-color: #111827; 
             color: white;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
             font-weight: 600;
             border: none;
@@ -117,7 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         button[type="submit"]:hover {
             background-color: #1f2937; 
         }
-
         
         .error-msg {
             background-color: #fef2f2;
@@ -129,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #f87171;
         }
 
-       
         .container p:last-child {
             text-align: center;
             font-size: 13px;
@@ -147,11 +148,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: underline;
         }
 
-
-
-
-
-
+        /* Penyesuaian opsional untuk layar HP yang sangat kecil */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
+            }
+            body {
+                background-color: #ffffff;
+            }
+        }
     </style>
 </head>
 <body>
@@ -159,16 +167,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Login</h2>
 
         <?php foreach ($errors as $e): ?>
-            <p><?= htmlspecialchars($e) ?></p>
+            <div class="error-msg"><?= htmlspecialchars($e) ?></div>
         <?php endforeach; ?>
 
         <form method="post" action="">
-            <label for="">Username</label>
-            <input type="text" name="username" required>
-            <br>
-            <label for="">Password</label>
-            <input type="password" name="password" required>
-            <br>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
             <button type="submit">Masuk</button>
         </form>
 
