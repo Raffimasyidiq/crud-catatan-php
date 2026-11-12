@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Catatan</title>
     <style>
         * {
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             background-color: #f7f7f8;
             color: #111827;
-            padding: 40px 20px;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -55,12 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .container {
             background-color: #ffffff;
-            padding: 40px;
+            padding: 32px;
             width: 100%;
             max-width: 500px;
             border: 1px solid #e4e4e7;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
 
         h2 {
@@ -91,25 +92,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         input[type="text"],
         textarea {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 14px;
             font-size: 14px;
             border: 1px solid #d1d5db;
             border-radius: 6px;
             margin-bottom: 16px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
             font-family: inherit;
         }
 
         input[type="text"]:focus,
         textarea:focus {
             border-color: #111827;
-            box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.1);
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
         }
 
         textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 140px;
+            line-height: 1.5;
         }
 
         .form-actions {
@@ -122,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flex: 1;
             background-color: #111827;
             color: white;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
             font-weight: 600;
             border: none;
@@ -141,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: none;
             background-color: #ffffff;
             color: #374151;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
             font-weight: 600;
             border: 1px solid #d1d5db;
@@ -153,29 +155,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #f3f4f6;
             border-color: #9ca3af;
         }
-    </style>
-    
-</head>
 
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 12px;
+                align-items: flex-start;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
 <body>
 <div class="container">
     <h2>Edit Catatan</h2>
+    
     <?php foreach ($errors as $e): ?>
-        <p style="color:red;"><?= htmlspecialchars($e) ?></p>
+        <div class="error-msg"><?= htmlspecialchars($e) ?></div>
     <?php endforeach; ?>
+    
     <form method="post" action="">
-        <p>
-            <label>Judul<br>
-            <input type="text" name="judul" value="<?= htmlspecialchars($judul) ?>" required></label>
-        </p>
-        <p>
-            <label>Isi<br>
-            <textarea name="isi" rows="4" cols="40" required><?= htmlspecialchars($isi) ?></textarea></label>
-        </p>
-        <p>
+        <label for="judul">Judul</label>
+        <input type="text" id="judul" name="judul" value="<?= htmlspecialchars($judul) ?>" required>
+
+        <label for="isi">Isi</label>
+        <textarea id="isi" name="isi" required><?= htmlspecialchars($isi) ?></textarea>
+
+        <div class="form-actions">
             <button type="submit">Update</button>
-            <a href="catatan.php">Batal</a>
-        </p>
+            <a href="catatan.php" class="btn-cancel">Batal</a>
+        </div>
     </form>
 </div>
 </body>

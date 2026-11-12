@@ -3,10 +3,10 @@
 require_once 'konfigurasi.php';
 require_login();
 
-$user_id = $_SESSION['user_id'];
+$user_id =$_SESSION['user_id'];
 
 // Ambil catatan milik user yang login.
-$stmt = $pdo->prepare('SELECT id, judul, isi, created_at FROM notes WHERE user_id = ? ORDER BY id DESC');
+$stmt =$pdo->prepare('SELECT id, judul, isi, created_at FROM notes WHERE user_id = ? ORDER BY id DESC');
 $stmt->execute([$user_id]);
 $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -27,7 +27,7 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         body {
             background-color: #f7f7f8;
             color: #111827;
-            padding: 40px 20px;
+            padding: 32px 20px;
             display: flex;
             justify-content: center;
         }
@@ -42,11 +42,12 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 16px;
             margin-bottom: 24px;
             background: #ffffff;
             padding: 20px 24px;
             border: 1px solid #e4e4e7;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
         }
 
@@ -61,7 +62,13 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             color: #6b7280;
             font-size: 14px;
             display: block;
-            margin-top: 2px;
+            margin-top: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .nav-links a {
@@ -69,12 +76,12 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             font-size: 13px;
             font-weight: 600;
             color: #374151;
-            padding: 8px 12px;
+            padding: 9px 14px;
             border-radius: 6px;
             border: 1px solid #d1d5db;
             background-color: #ffffff;
-            margin-left: 6px;
             transition: all 0.2s;
+            text-align: center;
         }
 
         .nav-links a:hover {
@@ -101,10 +108,11 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .note-card {
             background-color: #ffffff;
             border: 1px solid #e4e4e7;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
             transition: box-shadow 0.2s;
+            word-wrap: break-word;
         }
 
         .note-card:hover {
@@ -112,7 +120,7 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .note-title {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
             color: #111827;
             margin-bottom: 6px;
@@ -127,9 +135,8 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .note-content {
             font-size: 14px;
             color: #4b5563;
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: 16px;
-            white-space: pre-line;
         }
 
         .note-actions {
@@ -139,12 +146,13 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         .note-actions a {
             text-decoration: none;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
-            padding: 6px 10px;
+            padding: 7px 14px;
             border-radius: 6px;
             border: 1px solid #d1d5db;
             transition: all 0.2s;
+            text-align: center;
         }
 
         .btn-edit {
@@ -170,11 +178,40 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .empty-state {
             background: #ffffff;
             border: 1px solid #e4e4e7;
-            border-radius: 8px;
-            padding: 40px;
+            border-radius: 10px;
+            padding: 40px 20px;
             text-align: center;
             color: #6b7280;
             font-size: 14px;
+        }
+
+        /* Penyesuaian Responsif untuk HP */
+        @media (max-width: 640px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .header-box {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 18px;
+            }
+
+            .nav-links {
+                width: 100%;
+            }
+
+            .nav-links a {
+                flex: 1;
+            }
+
+            .nav-links a.btn-primary {
+                flex-basis: 100%;
+            }
+
+            .note-actions a {
+                flex: 1;
+            }
         }
     </style>
 </head>
