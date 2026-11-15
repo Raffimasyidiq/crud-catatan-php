@@ -1,0 +1,8 @@
+# Mengabaikan konfigurasi lokal / sensitif
+konfigurasi.php
+
+#folder sistem editor / OS
+
+.vscode/
+.DS_store
+Thumbs.db
